@@ -160,7 +160,7 @@ select {
     radial-gradient(circle at 50% 42%, rgba(47,183,255,.24), transparent 26%),
     linear-gradient(135deg, #021b31 0%, #003366 48%, #00162a 100%);
   color: var(--white);
-  transition: opacity .8s ease, visibility .8s ease, transform .8s ease;
+  transition: opacity 1s ease, visibility 1s ease, transform 1s cubic-bezier(.2, .8, .2, 1), filter 1s ease;
 }
 
 #loader::before,
@@ -173,6 +173,14 @@ select {
   animation: loaderGrid 2.4s ease-in-out infinite alternate;
 }
 
+#loader::before {
+  background:
+    linear-gradient(115deg, transparent 0 42%, rgba(112,255,216,.16) 48%, transparent 56%),
+    linear-gradient(90deg, rgba(255,255,255,.03), transparent);
+  background-size: 230% 100%, 100% 100%;
+  animation: loaderGrid 2.4s ease-in-out infinite alternate, loaderSweep 2.15s cubic-bezier(.22, .8, .22, 1) infinite;
+}
+
 #loader::after {
   inset: 23%;
   animation-delay: .35s;
@@ -181,7 +189,8 @@ select {
 #loader.loaded {
   opacity: 0;
   visibility: hidden;
-  transform: scale(1.03);
+  transform: scale(1.045);
+  filter: blur(10px);
 }
 
 .ld-logo {
@@ -190,12 +199,28 @@ select {
   min-height: 118px;
   display: grid;
   place-items: center;
+  isolation: isolate;
+}
+
+.ld-logo::after {
+  content: "";
+  position: absolute;
+  inset: 18px 0;
+  z-index: 2;
+  background: linear-gradient(105deg, transparent 18%, rgba(255,255,255,.6) 45%, transparent 70%);
+  transform: translateX(-120%) skewX(-16deg);
+  mix-blend-mode: screen;
+  animation: logoGlint 2.25s ease-in-out infinite;
+  pointer-events: none;
 }
 
 .ld-logo-img {
+  position: relative;
+  z-index: 1;
   width: min(330px, 72vw);
   height: auto;
   filter: brightness(0) invert(1) drop-shadow(0 24px 30px rgba(0,0,0,.28));
+  animation: logoSettle 1.45s cubic-bezier(.18, .8, .2, 1) both;
 }
 
 .ld-ring {
@@ -246,10 +271,11 @@ select {
 
 .ld-fill {
   height: 100%;
-  width: 45%;
+  width: 52%;
   border-radius: inherit;
   background: linear-gradient(90deg, var(--aqua), var(--cyan), var(--white));
-  animation: loadFill 1.9s ease-in-out infinite;
+  box-shadow: 0 0 22px rgba(112,255,216,.48);
+  animation: loadFill 2.15s cubic-bezier(.22, .8, .22, 1) infinite;
 }
 
 nav {
@@ -524,6 +550,36 @@ nav:not(.scrolled) .logo-img {
   margin-top: 34px;
 }
 
+.plus-signal {
+  width: fit-content;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+  padding: 10px 14px 10px 10px;
+  border: 1px solid rgba(112,255,216,.28);
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255,255,255,.13), rgba(47,183,255,.06));
+  color: rgba(255,255,255,.82);
+  font-size: .86rem;
+  font-weight: 800;
+  backdrop-filter: blur(14px);
+}
+
+.plus-mark {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--ink);
+  background: #70ffd8;
+  box-shadow: 0 0 24px rgba(112,255,216,.36);
+  font-size: 1.1rem;
+  font-weight: 900;
+}
+
 .btn-primary,
 .btn-secondary,
 .btn-outline,
@@ -793,6 +849,16 @@ nav:not(.scrolled) .logo-img {
   background: rgba(255,255,255,.86);
   box-shadow: var(--soft-shadow);
   transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease;
+}
+
+.svc-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--aqua), var(--cyan), transparent);
+  opacity: .92;
+  z-index: 2;
 }
 
 .svc-card:hover {
@@ -1391,6 +1457,22 @@ footer {
 @keyframes loaderGrid {
   from { transform: perspective(900px) rotateX(58deg) scale(1); opacity: .45; }
   to { transform: perspective(900px) rotateX(58deg) scale(1.16); opacity: .78; }
+}
+
+@keyframes loaderSweep {
+  0% { background-position: 140% 0, 0 0; }
+  100% { background-position: -120% 0, 0 0; }
+}
+
+@keyframes logoGlint {
+  0%, 28% { transform: translateX(-125%) skewX(-16deg); opacity: 0; }
+  42% { opacity: .72; }
+  62%, 100% { transform: translateX(125%) skewX(-16deg); opacity: 0; }
+}
+
+@keyframes logoSettle {
+  0% { opacity: 0; transform: translateY(10px) scale(.96); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 @media (max-width: 1080px) {

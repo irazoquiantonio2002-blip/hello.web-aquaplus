@@ -12,7 +12,7 @@ window.addEventListener("load", () => {
   window.setTimeout(() => {
     loader.classList.add("loaded");
     body.classList.remove("is-loading");
-  }, 1850);
+  }, 2200);
 });
 
 const setNavState = () => {

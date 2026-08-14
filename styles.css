@@ -584,6 +584,7 @@ nav:not(.scrolled) .logo-img {
 .btn-primary,
 .btn-secondary,
 .btn-outline,
+.btn-catalog,
 .btn-submit {
   min-height: 52px;
   display: inline-flex;
@@ -620,9 +621,16 @@ nav:not(.scrolled) .logo-img {
   box-shadow: var(--soft-shadow);
 }
 
+.btn-catalog {
+  color: var(--white);
+  background: linear-gradient(135deg, var(--copper), #d98a54);
+  box-shadow: 0 18px 42px rgba(185,106,60,.32);
+}
+
 .btn-primary:hover,
 .btn-secondary:hover,
 .btn-outline:hover,
+.btn-catalog:hover,
 .btn-submit:hover {
   transform: translateY(-2px);
   box-shadow: 0 22px 48px rgba(0,51,102,.22);
@@ -1454,6 +1462,10 @@ footer {
 
 .wa-btn {
   background: #18b56d;
+}
+
+.catalog-btn {
+  background: linear-gradient(135deg, var(--copper), #d98a54);
 }
 
 .fab-tip {

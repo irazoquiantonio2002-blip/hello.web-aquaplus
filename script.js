@@ -233,5 +233,5 @@ form.addEventListener("submit", (event) => {
     `Detalle: ${data.get("mensaje") || "Sin detalle adicional"}`
   ].join("\n");
 
-  window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+  window.open(`https://wa.me/525664079021?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
 });

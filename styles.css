@@ -497,7 +497,8 @@ nav:not(.scrolled) .logo-img {
 
 .h1-inner {
   display: inline-block;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: break-word;
   transform: translateY(100%);
   animation: titleRise .95s cubic-bezier(.18, .8, .2, 1) forwards;
 }
@@ -839,6 +840,10 @@ nav:not(.scrolled) .logo-img {
   gap: 18px;
 }
 
+.product-grid {
+  align-items: stretch;
+}
+
 .svc-card {
   position: relative;
   overflow: hidden;
@@ -883,20 +888,22 @@ nav:not(.scrolled) .logo-img {
   margin: -22px -22px 22px;
   overflow: hidden;
   position: relative;
+  background: var(--white);
 }
 
 .product-photo::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 45%, rgba(0,51,102,.18));
+  background: linear-gradient(180deg, transparent 62%, rgba(0,51,102,.08));
 }
 
 .product-photo img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
+  padding: 12px;
   transition: transform .6s ease;
 }
 
@@ -904,11 +911,12 @@ nav:not(.scrolled) .logo-img {
   transform: scale(1.05);
 }
 
-.ppr img { object-position: center; }
-.copper img { object-position: center; }
-.cpvc img { object-position: center 44%; }
-.sanitary img { object-position: center; }
-.hydraulic img { object-position: center 68%; }
+.ppr img,
+.cpvc img,
+.hydraulic img,
+.sanitary img,
+.copper img,
+.hoses img,
 .fittings img { object-position: center; }
 
 .svc-card h3 {
@@ -924,6 +932,44 @@ nav:not(.scrolled) .logo-img {
   z-index: 1;
   margin: 0;
   color: var(--muted);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 190px;
+  gap: 14px;
+}
+
+.gallery-item {
+  position: relative;
+  min-height: 190px;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--white);
+  box-shadow: var(--soft-shadow);
+}
+
+.gallery-item--wide {
+  grid-column: span 2;
+}
+
+.gallery-item--tall {
+  grid-row: span 2;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 14px;
+  transition: transform .55s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.05);
 }
 
 .why-bg {
@@ -1222,6 +1268,36 @@ textarea.fi {
   box-shadow: var(--soft-shadow);
 }
 
+.map-actions {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 18px;
+  align-items: center;
+  padding: 24px;
+}
+
+.map-actions h3 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.map-actions p:not(.map-kicker) {
+  margin: 8px 0 0;
+  color: var(--muted);
+}
+
+.map-embed-wrap {
+  border-top: 1px solid var(--line);
+  background: #f5f9fc;
+}
+
+.map-embed-wrap iframe {
+  display: block;
+  width: 100%;
+  min-height: 280px;
+  border: 0;
+}
+
 .map-placeholder {
   min-height: 240px;
   display: grid;
@@ -1491,8 +1567,13 @@ footer {
   }
 
   .svc-grid,
+  .gallery-grid,
   .benefit-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gallery-grid {
+    grid-auto-rows: 180px;
   }
 
   .foot-grid {
@@ -1559,12 +1640,29 @@ footer {
   .stats-row,
   .about-stats,
   .svc-grid,
+  .gallery-grid,
   .benefit-grid,
   .process-grid,
   .numbers-grid,
   .foot-grid,
   .frow {
     grid-template-columns: 1fr;
+  }
+
+  .gallery-grid {
+    grid-auto-rows: auto;
+  }
+
+  .gallery-item,
+  .gallery-item--wide,
+  .gallery-item--tall {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .gallery-item {
+    min-height: 0;
+    aspect-ratio: 4 / 3;
   }
 
   .stat-col {
@@ -1611,6 +1709,15 @@ footer {
 
   .foot-bottom {
     flex-direction: column;
+  }
+
+  .map-actions {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  .map-actions .btn-outline {
+    width: 100%;
   }
 
   .fab-stack {
